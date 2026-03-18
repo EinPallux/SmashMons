@@ -1,0 +1,170 @@
+# SmashMons Kits Configuration
+# ==============================
+# type: COOLDOWN or ENERGY
+# All kits with type ENERGY have a 100-unit energy bar (BossBar).
+# Cooldowns are in seconds. Energy costs are 0-100.
+
+kits:
+  pig:
+    display-name: "&#FFB3C6&lPig"
+    lore:
+      - "&#AAAAAA A bouncy, explosive pork powerhouse."
+      - ""
+      - "&#FFB3C6&lSpeed: &#FFFFFF+10%"
+      - "&#FFB3C6&lHealth: &#FFFFFF20 HP"
+    material: PORKCHOP
+    mob: PIG
+    health: 20.0
+    speed-bonus: 0.1
+    unlocked-by-default: true
+    cost: 0
+    type: COOLDOWN
+    abilities:
+      primary:
+        name: "Bouncy Bacon"
+        description: "Throws a Raw Porkchop that bounces up to 5 times off terrain/players, dealing damage on each hit."
+        material: PORKCHOP
+        cooldown: 8
+        damage: 7.0
+        bounces: 5
+        bounce-damage-multiplier: 0.85
+      secondary:
+        name: "Pigplosion"
+        description: "Spawns a speedy Baby Pig that chases enemies and explodes after 4 seconds."
+        material: FLINT_AND_STEEL
+        cooldown: 15
+        explosion-damage: 12.0
+        fuse-seconds: 4
+        pig-speed: 0.6
+      ultimate:
+        name: "Bacon Bonanza"
+        description: "Rains Raw Porkchop from the sky in a 10-block radius for 5 seconds. Each bacon explodes on impact!"
+        cooldown: 0
+        duration-seconds: 5
+        radius: 10
+        damage-per-hit: 6.0
+        explosion-radius: 2.5
+        slow-duration-ticks: 80
+        slow-amplifier: 1
+
+  skeleton:
+    display-name: "&#E0E0E0&lSkeleton"
+    lore:
+      - "&#AAAAAA A precise bone archer with deadly marksmanship."
+      - ""
+      - "&#E0E0E0&lHealth: &#FFFFFF20 HP"
+    material: BONE
+    mob: SKELETON
+    health: 20.0
+    speed-bonus: 0.0
+    unlocked-by-default: true
+    cost: 0
+    type: COOLDOWN
+    abilities:
+      primary:
+        name: "Volley"
+        description: "Fires a burst of 5 arrows in a spread pattern, each dealing damage."
+        material: ARROW
+        cooldown: 10
+        arrow-count: 5
+        damage: 3.5
+        spread: 0.15
+      secondary:
+        name: "Bone Shield"
+        description: "Grants a temporary shield of 6 absorption hearts for 5 seconds."
+        material: SHIELD
+        cooldown: 20
+        absorption-hearts: 6
+        duration-ticks: 100
+      ultimate:
+        name: "Rain of Bones"
+        description: "Summons a barrage of bone arrows raining down in a 8-block radius for 4 seconds."
+        cooldown: 0
+        duration-seconds: 4
+        radius: 8
+        arrows-per-tick: 2
+        damage: 3.0
+
+  blaze:
+    display-name: "&#FF6B00&lBlaze"
+    lore:
+      - "&#AAAAAA A fiery elemental that burns everything in its path."
+      - ""
+      - "&#FF6B00&lHealth: &#FFFFFF18 HP"
+      - "&#FF6B00&lFire Immunity: &#FFFFFFTrue"
+    material: BLAZE_ROD
+    mob: BLAZE
+    health: 18.0
+    speed-bonus: 0.05
+    unlocked-by-default: true
+    cost: 0
+    type: ENERGY
+    energy-regen-per-second: 8
+    abilities:
+      primary:
+        name: "Fireball Barrage"
+        description: "Launches 3 small fireballs in quick succession that set enemies on fire."
+        material: FIRE_CHARGE
+        energy-cost: 25
+        fireball-count: 3
+        damage: 4.0
+        fire-ticks: 60
+        delay-between-ticks: 5
+      secondary:
+        name: "Flame Surge"
+        description: "Blasts yourself upward in a pillar of flame, scorching nearby enemies."
+        material: BLAZE_POWDER
+        energy-cost: 35
+        damage: 5.0
+        launch-velocity: 1.0
+        burn-radius: 3.0
+        fire-ticks: 40
+      ultimate:
+        name: "Inferno"
+        description: "Erupts in a massive firestorm, creating a ring of fire and launching fireballs in all directions."
+        cooldown: 0
+        energy-cost: 0
+        radius: 6
+        fireball-count: 12
+        damage: 6.0
+        fire-ticks: 80
+
+  creeper:
+    display-name: "&#44FF44&lCreeper"
+    lore:
+      - "&#AAAAAA The explosive infiltrator. Silent and deadly."
+      - ""
+      - "&#44FF44&lHealth: &#FFFFFF22 HP"
+      - "&#44FF44&lSSSSS..."
+    material: GUNPOWDER
+    mob: CREEPER
+    health: 22.0
+    speed-bonus: 0.05
+    unlocked-by-default: false
+    cost: 500
+    type: COOLDOWN
+    abilities:
+      primary:
+        name: "Shock Charge"
+        description: "Charges forward and stuns the first enemy hit, dealing damage."
+        material: GUNPOWDER
+        cooldown: 8
+        damage: 5.0
+        dash-velocity: 1.4
+        stun-ticks: 30
+      secondary:
+        name: "Proximity Mine"
+        description: "Plants an invisible mine that detonates when an enemy walks over it."
+        material: TNT
+        cooldown: 18
+        damage: 7.0
+        trigger-radius: 1.5
+        mine-lifetime-seconds: 30
+      ultimate:
+        name: "Supercharge"
+        description: "Becomes a Charged Creeper and detonates in a massive explosion after 2 seconds."
+        cooldown: 0
+        fuse-ticks: 40
+        damage: 14.0
+        explosion-radius: 6
+        self-damage-factor: 0.2

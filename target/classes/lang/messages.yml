@@ -1,0 +1,79 @@
+# SmashMons Language File
+# ============================================
+# KEY RULE: Scoreboard uses Adventure Component API — hex colors work fine there.
+# Chat messages use LegacyComponentSerializer — hex &#RRGGBB works in chat too.
+# DO NOT use &r anywhere — it resets to dark §7.
+# Every message starts with %prefix% then immediately a color code.
+
+prefix: "&#D946EF&lSmashMons &f&#CCCCCC| &#FFFFFF"
+
+# ── General ──────────────────────────────────────────────────────────────────
+no-permission:    "%prefix%&#FF6B6BNo permission."
+player-only:      "%prefix%&#FF6B6BThis command can only be used by a player."
+player-not-found: "%prefix%&#FF6B6BPlayer &#FFFFFF%player% &#FF6B6Bwas not found."
+invalid-number:   "%prefix%&#FF6B6BPlease enter a valid number."
+reload-success:   "%prefix%&#6BFF6BConfiguration reloaded."
+
+# ── Arena Admin ──────────────────────────────────────────────────────────────
+arena-no-selection:    "%prefix%&#FF6B6BNo WorldEdit selection. Use &#FFFFFF//wand&#FF6B6B first."
+arena-created:         "%prefix%&#6BFF6BArena &#FFFFFF%arena% &#6BFF6Bcreated."
+arena-deleted:         "%prefix%&#6BFF6BArena &#FFFFFF%arena% &#6BFF6Bdeleted."
+arena-not-found:       "%prefix%&#FF6B6BArena &#FFFFFF%arena% &#FF6B6Bdoes not exist."
+arena-already-exists:  "%prefix%&#FF6B6BAn arena named &#FFFFFF%arena% &#FF6B6Balready exists."
+arena-in-use:          "%prefix%&#FF6B6BThat arena is currently in use."
+spawn-set:             "%prefix%&#6BFF6BSpawn &#FFFFFF#%number% &#6BFF6Badded to &#FFFFFF%arena%&#6BFF6B."
+crystal-set:           "%prefix%&#6BFF6BCrystal spawn &#FFFFFF#%number% &#6BFF6Badded to &#FFFFFF%arena%&#6BFF6B."
+removed-spawnpoint:    "%prefix%&#6BFF6BRemoved spawn &#FFFFFF#%number% &#6BFF6Bfrom &#FFFFFF%arena%&#6BFF6B."
+removed-crystal:       "%prefix%&#6BFF6BRemoved crystal &#FFFFFF#%number% &#6BFF6Bfrom &#FFFFFF%arena%&#6BFF6B."
+remove-invalid-number: "%prefix%&#FF6B6BThat number does not exist."
+server-spawn-set:      "%prefix%&#6BFF6BServer spawn updated."
+smashcoins-set:        "%prefix%&#6BFF6BSet &#FFFFFF%player%&#6BFF6B's balance to &#FFD700%amount% &#6BFF6BSmashCoins."
+
+# ── Arena / Game Join ─────────────────────────────────────────────────────────
+arena-full:          "%prefix%&#FF6B6BThat arena is full."
+arena-not-available: "%prefix%&#FF6B6BThat arena is not available right now."
+already-in-game:     "%prefix%&#FF6B6BYou are already in a game."
+joined-arena:        "%prefix%&#6BFF6BJoined &#FFFFFF%arena%&#6BFF6B. Choose your kit!"
+left-arena:          "%prefix%&#CCCCCCYou left the arena."
+choose-kit:          "%prefix%&#FFD700Pick your kit before the game starts!"
+kit-chosen:          "%prefix%&#6BFF6BKit selected: &#FFD700%kit%&#6BFF6B. Ready!"
+kit-not-unlocked:    "%prefix%&#FF6B6BYou have not unlocked that kit yet."
+not-enough-coins:    "%prefix%&#FF6B6BYou need &#FFD700%cost% &#FF6B6BSmashCoins. Balance: &#FFD700%balance%&#FF6B6B."
+kit-purchased:       "%prefix%&#6BFF6BUnlocked &#FFD700%kit% &#6BFF6Bfor &#FFD700%cost% &#6BFF6BSmashCoins!"
+
+# ── Game ─────────────────────────────────────────────────────────────────────
+game-countdown:           "%prefix%&#FFD700Starting in &#FFFFFF%seconds%s &#FFD700— &#FFFFFF%players%&#CCCCCC/&#FFFFFF%max% &#CCCCCCplayers"
+game-started:             "%prefix%&#6BFF6B&lGame started! Good luck!"
+game-round-start:         "%prefix%&#FFD700&lRound %round% &#FFD700of &#FFFFFF%total% &#FFD700— &#FFFFFF&lFight!"
+game-round-over:          "%prefix%&#FFD700Round over — &#FFFFFF&l%player% &#FFD700survived!"
+game-killed:              "%prefix%&#FF6B6BEliminated by &#FFFFFF%killer%&#FF6B6B."
+game-kill:                "%prefix%&#6BFF6BEliminated &#FFFFFF%victim%&#6BFF6B. &#FFD700+%points% pts"
+game-pick-augment:        "%prefix%&#D946EF&lChoose an augment! &#FFFFFF%seconds%s &#CCCCCCremaining."
+augment-chosen:           "%prefix%&#6BFF6BAugment chosen: &#FFD700%augment%&#6BFF6B."
+augment-random:           "%prefix%&#CCCCCCTime expired — &#FFD700a random augment was assigned."
+augment-picked-broadcast: "%prefix%&#FFFFFF%player% &#CCCCCC— &#FFD700%augment%"
+augment-summary-header:   "\n%prefix%&#D946EF&lAugments — Round %round%"
+augment-summary-line:     "  &#CCCCCC%player%  &#FFFFFF>> &#FFD700%augment%"
+game-over:                "%prefix%&#FFD700&lGame Over!"
+game-winner:              "%prefix%&#FFD700&l%player% &#FFD700wins with &#FFFFFF%points% &#FFD700points. GG!"
+game-smashcoins-earned:   "%prefix%&#FFD700+%coins% SmashCoins &#CCCCCCearned this game."
+double-jump-cooldown:     "%prefix%&#FF6B6BDouble jump on cooldown &#CCCCCC(%seconds%s)"
+ultimate-no-crystal:      "%prefix%&#FF6B6BCollect an &#FFD700Ultimate Crystal &#FF6B6Bto use your ultimate."
+ultimate-used:            "%prefix%&#D946EF&l* Ultimate Activated!"
+frozen-message:           "%prefix%&#CCCCCCStay put — game starts soon!"
+mine-planted:             "%prefix%&#6BFF6BMine planted!"
+
+# ── Crystal ───────────────────────────────────────────────────────────────────
+crystal-spawned:   "%prefix%&#FFD700* &#FFFFFFAn Ultimate Crystal has spawned&#FFD700!"
+crystal-picked-up: "%prefix%&#FFD700* &#FFFFFF%player% &#FFD700claimed the Ultimate Crystal!"
+
+# ── Kit / Ability ─────────────────────────────────────────────────────────────
+ability-cooldown:  "%prefix%&#FFFFFF%ability% &#FF6B6Bon cooldown &#CCCCCC(%seconds%s)"
+ability-no-energy: "%prefix%&#FF6B6BNot enough energy &#CCCCCC(%cost% needed, %current% available)"
+
+# ── Stats ─────────────────────────────────────────────────────────────────────
+smashcoins-balance: "%prefix%&#FFD700%coins% SmashCoins"
+kda-message:        "%prefix%&#6BFF6B%kills% &#CCCCCC/ &#FF6B6B%deaths% &#CCCCCC/ &#FFD700%kd% KD"
+
+# ── Scoreboard title (used by ScoreboardManager) ─────────────────────────────
+scoreboard-title: "&#D946EF&lSmashMons"

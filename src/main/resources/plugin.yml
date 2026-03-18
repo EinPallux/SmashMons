@@ -1,0 +1,52 @@
+name: SmashMons
+version: '${project.version}'
+main: com.pallux.smashmons.SmashMons
+api-version: '1.21'
+description: Super Smash Mobs inspired plugin
+author: Pallux
+
+softdepend:
+  - PlaceholderAPI
+  - ProtocolLib
+  - LibsDisguises
+  - WorldEdit
+  - FastAsyncWorldEdit
+
+commands:
+  smashmons:
+    description: Opens the Arena selection GUI
+    aliases: [arenas]
+    permission: sm.player
+    usage: /smashmons
+  kits:
+    description: Opens the Kit overview GUI
+    permission: sm.player
+    usage: /kits
+  smashcoins:
+    description: Shows your SmashCoins balance
+    permission: sm.player
+    usage: /smashcoins
+  kda:
+    description: Shows your KDA stats
+    permission: sm.player
+    usage: /kda
+  augments:
+    description: Opens the Augment Compendium info GUI
+    permission: sm.player
+    usage: /augments
+  smhelp:
+    description: Shows all SmashMons player commands
+    permission: sm.player
+    usage: /smhelp
+  sm:
+    description: Admin command for SmashMons
+    permission: sm.admin
+    usage: /sm <subcommand>
+
+permissions:
+  sm.player:
+    description: Allows players to use SmashMons player commands
+    default: true
+  sm.admin:
+    description: Allows admins to use SmashMons admin commands
+    default: op
