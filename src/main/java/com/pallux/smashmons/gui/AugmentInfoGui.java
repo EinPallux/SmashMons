@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Read-only overview of every augment — accessible from hub and in-game via /augments.
+ * Read-only overview of every augment — accessible via /augments.
  */
 public class AugmentInfoGui {
 
@@ -24,7 +24,6 @@ public class AugmentInfoGui {
     public static void open(SmashMons plugin, Player player) {
         Collection<Augment> augments = plugin.getAugmentManager().getAugments();
 
-        // Always use 54 slots; fill all with border panes first
         Inventory inv = Bukkit.createInventory(null, 54, ColorUtil.colorize(TITLE));
 
         ItemStack border = new ItemBuilder(Material.PURPLE_STAINED_GLASS_PANE).name(" ").build();
@@ -32,19 +31,19 @@ public class AugmentInfoGui {
 
         // Header info item in top-centre
         inv.setItem(4, new ItemBuilder(Material.ENCHANTED_BOOK)
-                .name("&#DD44FF&lAugment Compendium")
+                .name("&#D946EF&lAugment Compendium")
                 .lore(
-                        "&#AAAAAA Augments are passive bonuses",
-                        "&#AAAAAA picked between rounds.",
+                        "&#CCCCCCAugments are passive bonuses",
+                        "&#CCCCCCpicked between rounds.",
                         "",
-                        "&#FFD700 Each player picks 1 augment",
-                        "&#FFD700 per round from 3 random choices.",
+                        "&#FFD700Each player picks 1 augment",
+                        "&#FFD700per round from 3 random choices.",
                         "",
-                        "&#CCCCCC#CCCCCC ─────────────────── "
+                        "&#CCCCCC────────────────────"
                 )
                 .build());
 
-        // Interior slots (same pattern as ArenaGui — rows 1-4, cols 1-7)
+        // Interior slots — rows 1-4, cols 1-7
         List<Integer> interiorSlots = new ArrayList<>();
         for (int row = 1; row <= 4; row++) {
             for (int col = 1; col <= 7; col++) {
@@ -62,10 +61,10 @@ public class AugmentInfoGui {
             ItemStack item = new ItemBuilder(aug.getMaterial())
                     .name(aug.getDisplayName())
                     .lore(
-                            "&#CCCCCC#CCCCCC ────────────────── ",
+                            "&#CCCCCC────────────────────",
                             "&#FFFFFF" + aug.getDescription(),
-                            "&#CCCCCC#CCCCCC ────────────────── ",
-                            "&#AAAAAA Type&#FFFFFF: " + typeColor + typeLabel,
+                            "&#CCCCCC────────────────────",
+                            "&#CCCCCCType&#FFFFFF:  " + typeColor + typeLabel,
                             buildStatLine(aug)
                     )
                     .glowing()
@@ -77,8 +76,8 @@ public class AugmentInfoGui {
 
         if (augments.isEmpty()) {
             inv.setItem(22, new ItemBuilder(Material.BARRIER)
-                    .name("&#FF4444&lNo Augments Configured")
-                    .lore("&#AAAAAA Ask an admin to add augments.")
+                    .name("&#FF6B6B&lNo Augments Configured")
+                    .lore("&#CCCCCCAsk an admin to add augments to augments.yml.")
                     .build());
         }
 
@@ -102,34 +101,34 @@ public class AugmentInfoGui {
         return switch (type) {
             case STAT_BOOST -> "&#44FFFF";
             case AURA       -> "&#FF44FF";
-            case ON_HIT     -> "&#FF4444";
+            case ON_HIT     -> "&#FF6B6B";
             case ON_KILL    -> "&#FFAA00";
-            case ON_DEATH   -> "&#CCCCCC#CCCCCC";
-            case PASSIVE    -> "&#44FF44";
+            case ON_DEATH   -> "&#CCCCCC";
+            case PASSIVE    -> "&#6BFF6B";
         };
     }
 
     /**
-     * Builds a short human-readable stat line from the augment's key data values.
-     * Falls back to an empty string for augments with no obvious numeric stat.
+     * Builds a short human-readable stat line from the augment's numeric values.
      */
     private static String buildStatLine(Augment aug) {
         return switch (aug.getId()) {
-            case "iron_will"              -> "&#44FF44+" + (int) aug.getDouble("extra-health", 4) + " Max HP";
-            case "swift_strikes"          -> "&#FFD700+" + pct(aug.getDouble("damage-multiplier", 1.15)) + "% Damage";
-            case "wind_resistance"        -> "&#44FFFF-" + pct2(aug.getDouble("knockback-reduction", 0.25)) + "% Knockback";
-            case "glass_cannon"           -> "&#FFD700+" + pct(aug.getDouble("damage-multiplier", 1.30)) + "% Dmg  &#FF4444+" + pct2(aug.getDouble("damage-taken-multiplier", 1.15)) + "% Dmg Taken";
-            case "spike_aura"             -> "&#FF44FF" + pct2(aug.getDouble("reflect-percent", 0.20)) + "% Damage Reflected";
-            case "vampiric_touch"         -> "&#FF4444Heal " + aug.getDouble("heal-per-damage", 0.5) + "HP per damage dealt";
-            case "lightning_reflexes"     -> "&#44FFFF-" + pct2(aug.getDouble("cooldown-reduction", 0.20)) + "% Cooldowns";
-            case "adrenaline"             -> "&#FFD700Speed II for " + (aug.getInt("speed-duration-ticks", 80) / 20) + "s on kill";
-            case "stone_skin"             -> "&#AAAAAA Permanent Resistance I";
-            case "double_jump_master"     -> "&#44FFFF-" + (int) aug.getDouble("double-jump-cooldown-reduction", 1) + "s Double Jump CD";
-            case "energy_surge"           -> "&#DD44FF+" + pct2(aug.getDouble("energy-regen-bonus", 0.25)) + "% Energy Regen";
-            case "final_stand"            -> "&#FF2222Strength I when below " + (int) aug.getDouble("threshold-health", 4) + " HP";
-            case "phantom_step"           -> "&#AAAAAA" + (aug.getInt("invis-duration-ticks", 40) / 20) + "s Invisibility after using ability";
-            case "berserker"              -> "&#CC2200+" + pct2(aug.getDouble("damage-bonus-per-kill", 0.05)) + "% Damage per kill this round";
-            default                       -> "";
+            case "iron_will"          -> "&#6BFF6B+" + (int) aug.getDouble("extra-health", 4) + " Max HP";
+            case "swift_strikes"      -> "&#FFD700+" + pct(aug.getDouble("damage-multiplier", 1.15)) + "% Damage";
+            case "wind_resistance"    -> "&#44FFFF-" + pct2(aug.getDouble("knockback-reduction", 0.25)) + "% Knockback";
+            case "glass_cannon"       -> "&#FFD700+" + pct(aug.getDouble("damage-multiplier", 1.30))
+                    + "% Dmg  &#FF6B6B+" + pct2(aug.getDouble("damage-taken-multiplier", 1.15)) + "% Dmg Taken";
+            case "spike_aura"         -> "&#FF44FF" + pct2(aug.getDouble("reflect-percent", 0.20)) + "% Damage Reflected";
+            case "vampiric_touch"     -> "&#FF6B6BHeal " + aug.getDouble("heal-per-damage", 0.5) + " HP per damage dealt";
+            case "lightning_reflexes" -> "&#44FFFF-" + pct2(aug.getDouble("cooldown-reduction", 0.20)) + "% Cooldowns";
+            case "adrenaline"         -> "&#FFD700Speed II for " + (aug.getInt("speed-duration-ticks", 80) / 20) + "s on kill";
+            case "stone_skin"         -> "&#CCCCCCPermanent Resistance I";
+            case "double_jump_master" -> "&#44FFFF-" + (int) aug.getDouble("double-jump-cooldown-reduction", 1) + "s Double Jump CD";
+            case "energy_surge"       -> "&#D946EF+" + pct2(aug.getDouble("energy-regen-bonus", 0.25)) + "% Energy Regen";
+            case "final_stand"        -> "&#FF6B6BStrength I when below " + (int) aug.getDouble("threshold-health", 4) + " HP";
+            case "phantom_step"       -> "&#CCCCCC" + (aug.getInt("invis-duration-ticks", 40) / 20) + "s Invisibility after using an ability";
+            case "berserker"          -> "&#FF6B00+" + pct2(aug.getDouble("damage-bonus-per-kill", 0.05)) + "% Damage per kill this round";
+            default                   -> "";
         };
     }
 

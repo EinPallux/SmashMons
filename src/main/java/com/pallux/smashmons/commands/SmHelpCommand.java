@@ -19,16 +19,16 @@ public class SmHelpCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         sender.sendMessage(Component.empty());
         sender.sendMessage(ColorUtil.colorize("&#D946EF&l     SmashMons — Commands"));
-        sender.sendMessage(ColorUtil.colorize("&#CCCCCC     ─────────────────────────────"));
+        sender.sendMessage(ColorUtil.colorize("&#CCCCCC     ──────────────────────────────"));
 
-        line(sender, "/smashmons", "Open the arena browser and join a game.");
-        line(sender, "/kits",      "Browse all kits, view abilities & unlock with SmashCoins.");
-        line(sender, "/augments",  "View the augment compendium — all passive bonuses explained.");
-        line(sender, "/smashcoins","Check your current SmashCoins balance.");
-        line(sender, "/kda",       "See your all-time kills, deaths and K/D ratio.");
-        line(sender, "/smhelp",    "Show this help menu.");
+        line(sender, "/smashmons",  "Open the arena browser and join a game.");
+        line(sender, "/kits",       "Browse all kits, view abilities & unlock with SmashCoins.");
+        line(sender, "/augments",   "View the augment compendium — all passive bonuses explained.");
+        line(sender, "/smashcoins", "Check your current SmashCoins balance.");
+        line(sender, "/kda",        "See your all-time kills, deaths and K/D ratio.");
+        line(sender, "/smhelp",     "Show this help menu.");
 
-        sender.sendMessage(ColorUtil.colorize("&#CCCCCC     ─────────────────────────────"));
+        sender.sendMessage(ColorUtil.colorize("&#CCCCCC     ──────────────────────────────"));
         sender.sendMessage(Component.empty());
         return true;
     }

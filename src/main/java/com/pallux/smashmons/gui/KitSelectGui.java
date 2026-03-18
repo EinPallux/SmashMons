@@ -4,6 +4,7 @@ import com.pallux.smashmons.SmashMons;
 import com.pallux.smashmons.data.PlayerData;
 import com.pallux.smashmons.game.Game;
 import com.pallux.smashmons.kits.Kit;
+import com.pallux.smashmons.kits.KitAbility;
 import com.pallux.smashmons.util.ColorUtil;
 import com.pallux.smashmons.util.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class KitSelectGui {
         int size = 54;
         Inventory inv = Bukkit.createInventory(null, size, ColorUtil.colorize(TITLE));
 
-        // Borders
+        // Borders: top row, bottom row, left and right columns
         ItemStack border = new ItemBuilder(Material.PURPLE_STAINED_GLASS_PANE).name(" ").build();
         for (int i = 0; i < 9; i++) inv.setItem(i, border);
         for (int i = 45; i < 54; i++) inv.setItem(i, border);
@@ -43,31 +44,36 @@ public class KitSelectGui {
 
             List<String> lore = new ArrayList<>(kit.getLore());
             lore.add("");
-            lore.add("&#AAAAAA ──── Abilities ──── ");
+            lore.add("&#CCCCCC──── Abilities ────");
+
             if (kit.getPrimaryAbility() != null) {
-                lore.add("&#FFD700[Q] &#FFFFFF" + kit.getPrimaryAbility().getName()
-                        + " &#AAAAAA— " + formatCooldownEnergy(kit, kit.getPrimaryAbility()));
+                lore.add("&#FFD700[Primary] &#FFFFFF" + kit.getPrimaryAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getPrimaryAbility().getDescription());
+                lore.add("  " + formatCooldownEnergy(kit, kit.getPrimaryAbility()));
             }
             if (kit.getSecondaryAbility() != null) {
-                lore.add("&#FFD700[E] &#FFFFFF" + kit.getSecondaryAbility().getName()
-                        + " &#AAAAAA— " + formatCooldownEnergy(kit, kit.getSecondaryAbility()));
+                lore.add("&#FFD700[Secondary] &#FFFFFF" + kit.getSecondaryAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getSecondaryAbility().getDescription());
+                lore.add("  " + formatCooldownEnergy(kit, kit.getSecondaryAbility()));
             }
             if (kit.getUltimateAbility() != null) {
-                lore.add("&#FF44FF[U] &#FFFFFF" + kit.getUltimateAbility().getName()
-                        + " &#AAAAAA— &#FF44FFUltimate (Crystal required)");
+                lore.add("&#FF44FF[Ultimate] &#FFFFFF" + kit.getUltimateAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getUltimateAbility().getDescription());
+                lore.add("  &#FF44FFRequires: Ultimate Crystal");
             }
             lore.add("");
             if (unlocked) {
-                lore.add("&#44FF44▶ Click to select!");
+                lore.add("&#6BFF6B▶ Click to select this kit!");
             } else {
-                lore.add("&#FF4444✗ Locked — &#FFD700" + kit.getCost() + " SmashCoins to unlock.");
+                lore.add("&#FF6B6B✗ Locked — &#FFD700" + kit.getCost() + " SmashCoins to unlock.");
             }
 
             Material mat = unlocked ? kit.getMaterial() : Material.BARRIER;
             ItemStack item = new ItemBuilder(mat)
-                    .name((unlocked ? "&#FFFFFF&l" : "&#FF4444&l") + stripColor(kit.getDisplayName()))
+                    .name((unlocked ? "&#FFFFFF&l" : "&#FF6B6B&l") + stripColor(kit.getDisplayName()))
                     .lore(lore)
                     .build();
+
             if (unlocked) {
                 item.editMeta(meta -> meta.getPersistentDataContainer()
                         .set(new NamespacedKey(plugin, "kit_id"), PersistentDataType.STRING, kit.getId()));
@@ -80,8 +86,8 @@ public class KitSelectGui {
         player.openInventory(inv);
     }
 
-    private static String formatCooldownEnergy(Kit kit, com.pallux.smashmons.kits.KitAbility ability) {
-        if (kit.isEnergy()) return "&#DD44FF" + ability.getEnergyCost() + " Energy";
+    private static String formatCooldownEnergy(Kit kit, KitAbility ability) {
+        if (kit.isEnergy()) return "&#D946EF" + ability.getEnergyCost() + " Energy";
         return "&#44DDFF" + ability.getCooldownSeconds() + "s cooldown";
     }
 

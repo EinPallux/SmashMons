@@ -22,25 +22,22 @@ public class ArenaGui {
     public static void open(SmashMons plugin, Player player) {
         Collection<Arena> arenas = plugin.getArenaManager().getArenas();
 
-        // Always use 54 slots so there are always valid interior slots.
-        // For 0 arenas show a "no arenas" placeholder instead of crashing.
         Inventory inv = Bukkit.createInventory(null, 54, ColorUtil.colorize(TITLE_TAG));
 
-        // Fill entire inventory with border panes first
+        // Border panes
         ItemStack border = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ").build();
         for (int i = 0; i < 54; i++) inv.setItem(i, border);
 
         if (arenas.isEmpty()) {
             inv.setItem(22, new ItemBuilder(Material.BARRIER)
-                    .name("&#FF4444&lNo Arenas Available")
-                    .lore("&#AAAAAA Ask an admin to create an arena.")
+                    .name("&#FF6B6B&lNo Arenas Available")
+                    .lore("&#CCCCCCAsk an admin to set up an arena.")
                     .build());
             player.openInventory(inv);
             return;
         }
 
-        // Interior slots of a 54-slot GUI: rows 1-3 (indices 9-44), columns 1-7 (skip 0 and 8)
-        // That gives slots: 10-16, 19-25, 28-34, 37-43  — 28 usable slots total
+        // Interior slots: rows 1-4, columns 1-7 (skip border columns 0 and 8)
         List<Integer> interiorSlots = new ArrayList<>();
         for (int row = 1; row <= 4; row++) {
             for (int col = 1; col <= 7; col++) {
@@ -59,31 +56,30 @@ public class ArenaGui {
 
             Material icon = switch (state) {
                 case AVAILABLE, WAITING -> Material.LIME_CONCRETE;
-                case STARTING            -> Material.YELLOW_CONCRETE;
-                case IN_GAME             -> Material.ORANGE_CONCRETE;
-                case ENDING              -> Material.RED_CONCRETE;
+                case STARTING           -> Material.YELLOW_CONCRETE;
+                case IN_GAME            -> Material.ORANGE_CONCRETE;
+                case ENDING             -> Material.RED_CONCRETE;
             };
 
             String stateStr = switch (state) {
-                case AVAILABLE, WAITING -> "&#44FF44Available";
-                case STARTING           -> "&#FFFF44Starting...";
-                case IN_GAME            -> "&#FF8800In Game";
-                case ENDING             -> "&#FF4444Ending";
+                case AVAILABLE, WAITING -> "&#6BFF6BOpen";
+                case STARTING           -> "&#FFD700Starting...";
+                case IN_GAME            -> "&#FF8844In Progress";
+                case ENDING             -> "&#FF6B6BEnding";
             };
 
-            int crystalCount = arena.getCrystalSpawns().size();
             boolean joinable = state == ArenaState.AVAILABLE || state == ArenaState.WAITING;
 
             ItemStack arenaItem = new ItemBuilder(icon)
                     .name("&#FFFFFF&l" + arena.getDisplayName())
                     .lore(
-                            "&#CCCCCC#CCCCCC ─────────────────── ",
-                            "&#AAAAAA Map&#FFFFFF: &#FFD700" + arena.getId(),
-                            "&#AAAAAA Players&#FFFFFF: &#44FF44" + currentPlayers + " &#FFFFFF/ &#44FF44" + maxPlayers,
-                            "&#AAAAAA Crystal Spawns&#FFFFFF: &#FFD700" + crystalCount,
-                            "&#AAAAAA Status&#FFFFFF: " + stateStr,
-                            "&#CCCCCC#CCCCCC ─────────────────── ",
-                            joinable ? "&#44FF44▶ Click to join!" : "&#FF4444✗ Cannot join right now."
+                            "&#CCCCCC────────────────────",
+                            "&#CCCCCCMap&#FFFFFF:     &#FFD700" + arena.getId(),
+                            "&#CCCCCCPlayers&#FFFFFF:  &#6BFF6B" + currentPlayers + " &#CCCCCC/ &#6BFF6B" + maxPlayers,
+                            "&#CCCCCCCrystals&#FFFFFF: &#FFD700" + arena.getCrystalSpawns().size(),
+                            "&#CCCCCCStatus&#FFFFFF:  " + stateStr,
+                            "&#CCCCCC────────────────────",
+                            joinable ? "&#6BFF6B▶ Click to join!" : "&#FF6B6B✗ Cannot join right now."
                     )
                     .build();
 

@@ -3,6 +3,7 @@ package com.pallux.smashmons.gui;
 import com.pallux.smashmons.SmashMons;
 import com.pallux.smashmons.data.PlayerData;
 import com.pallux.smashmons.kits.Kit;
+import com.pallux.smashmons.kits.KitAbility;
 import com.pallux.smashmons.util.ColorUtil;
 import com.pallux.smashmons.util.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -35,47 +36,60 @@ public class KitsOverviewGui {
         PlayerData pd = plugin.getPlayerDataManager().get(player);
         long balance = pd.getSmashCoins();
 
-        // Balance display (top center)
+        // Balance display in top centre
         inv.setItem(4, new ItemBuilder(Material.SUNFLOWER)
                 .name("&#FFD700&lYour Balance")
-                .lore("&#FFD700&l" + balance + " &#FFFFFFSmashCoins &#FFD700✦")
+                .lore(
+                        "&#FFD700" + balance + " SmashCoins",
+                        "",
+                        "&#CCCCCCSpend coins to unlock kits!"
+                )
                 .build());
 
         int slot = 10;
         for (Kit kit : kits) {
             if (slot >= 44) break;
             boolean unlocked = kit.isUnlockedByDefault() || pd.hasKit(kit.getId());
-            boolean canBuy = !unlocked && balance >= kit.getCost();
+            boolean canBuy   = !unlocked && balance >= kit.getCost();
 
             List<String> lore = new ArrayList<>(kit.getLore());
             lore.add("");
-            lore.add("&#AAAAAA ──── Abilities ──── ");
+            lore.add("&#CCCCCC──── Abilities ────");
+
             if (kit.getPrimaryAbility() != null) {
-                lore.add("&#FFD700▸ &#FFFFFF" + kit.getPrimaryAbility().getName());
-                lore.add("  &#AAAAAA" + kit.getPrimaryAbility().getDescription());
+                lore.add("&#FFD700[Primary] &#FFFFFF" + kit.getPrimaryAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getPrimaryAbility().getDescription());
                 lore.add("  " + formatCooldownEnergy(kit, kit.getPrimaryAbility()));
             }
             if (kit.getSecondaryAbility() != null) {
-                lore.add("&#FFD700▸ &#FFFFFF" + kit.getSecondaryAbility().getName());
-                lore.add("  &#AAAAAA" + kit.getSecondaryAbility().getDescription());
+                lore.add("&#FFD700[Secondary] &#FFFFFF" + kit.getSecondaryAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getSecondaryAbility().getDescription());
                 lore.add("  " + formatCooldownEnergy(kit, kit.getSecondaryAbility()));
             }
             if (kit.getUltimateAbility() != null) {
-                lore.add("&#FF44FF▸ &#FFFFFF" + kit.getUltimateAbility().getName() + " &#FF44FF(Ultimate)");
-                lore.add("  &#AAAAAA" + kit.getUltimateAbility().getDescription());
+                lore.add("&#FF44FF[Ultimate] &#FFFFFF" + kit.getUltimateAbility().getName());
+                lore.add("  &#CCCCCC" + kit.getUltimateAbility().getDescription());
+                lore.add("  &#FF44FFRequires: Ultimate Crystal");
             }
             lore.add("");
+
             if (unlocked) {
-                lore.add("&#44FF44✔ Unlocked");
+                lore.add("&#6BFF6B✔ Already Unlocked");
             } else {
-                lore.add("&#FF4444✗ Locked — &#FFD700" + kit.getCost() + " SmashCoins");
-                if (canBuy) lore.add("&#44FF44▶ Click to purchase!");
-                else lore.add("&#FF8888You need &#FFD700" + (kit.getCost() - balance) + "&#FF8888 more SmashCoins.");
+                lore.add("&#FF6B6B✗ Locked — &#FFD700" + kit.getCost() + " SmashCoins");
+                if (canBuy) {
+                    lore.add("&#6BFF6B▶ Click to purchase!");
+                } else {
+                    long needed = kit.getCost() - balance;
+                    lore.add("&#FF6B6BNeed &#FFD700" + needed + " &#FF6B6Bmore SmashCoins.");
+                }
             }
 
             Material mat = unlocked ? kit.getMaterial() : (canBuy ? kit.getMaterial() : Material.BARRIER);
+            String nameColor = unlocked ? "&#6BFF6B&l" : (canBuy ? "&#FFD700&l" : "&#FF6B6B&l");
+
             ItemStack item = new ItemBuilder(mat)
-                    .name((unlocked ? "&#44FF44&l" : (canBuy ? "&#FFD700&l" : "&#FF4444&l")) + stripColor(kit.getDisplayName()))
+                    .name(nameColor + stripColor(kit.getDisplayName()))
                     .lore(lore)
                     .build();
 
@@ -90,9 +104,9 @@ public class KitsOverviewGui {
         player.openInventory(inv);
     }
 
-    private static String formatCooldownEnergy(Kit kit, com.pallux.smashmons.kits.KitAbility ability) {
-        if (kit.isEnergy()) return "  &#DD44FFEnergy: " + ability.getEnergyCost();
-        return "  &#44DDFFCooldown: " + ability.getCooldownSeconds() + "s";
+    private static String formatCooldownEnergy(Kit kit, KitAbility ability) {
+        if (kit.isEnergy()) return "&#D946EFEnergy: " + ability.getEnergyCost();
+        return "&#44DDFFCooldown: " + ability.getCooldownSeconds() + "s";
     }
 
     private static String stripColor(String s) {

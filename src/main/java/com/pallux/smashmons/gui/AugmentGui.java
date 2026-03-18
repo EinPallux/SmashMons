@@ -21,23 +21,22 @@ public class AugmentGui {
     public static void open(SmashMons plugin, Player player, List<Augment> choices) {
         Inventory inv = Bukkit.createInventory(null, 27, ColorUtil.colorize(TITLE));
 
-        // Decorative borders
         ItemStack border = new ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE).name(" ").build();
         for (int i = 0; i < 27; i++) inv.setItem(i, border);
 
-        // Place 3 augment choices in slots 11, 13, 15
+        // Place up to 3 augment choices in slots 11, 13, 15
         int[] slots = {11, 13, 15};
         for (int i = 0; i < choices.size() && i < 3; i++) {
             Augment aug = choices.get(i);
             ItemStack item = new ItemBuilder(aug.getMaterial())
                     .name(aug.getDisplayName())
                     .lore(
-                            "&#CCCCCC#CCCCCC ────────────────── ",
-                            "&#AAAAAA" + aug.getDescription(),
-                            "&#CCCCCC#CCCCCC ────────────────── ",
-                            "&#AAAAAA Type&#FFFFFF: " + formatType(aug.getType()),
+                            "&#CCCCCC────────────────────",
+                            "&#FFFFFF" + aug.getDescription(),
+                            "&#CCCCCC────────────────────",
+                            "&#CCCCCCType&#FFFFFF: " + formatType(aug.getType()),
                             "",
-                            "&#44FF44▶ Click to choose!"
+                            "&#6BFF6B▶ Click to choose this augment!"
                     )
                     .glowing()
                     .build();
@@ -52,11 +51,11 @@ public class AugmentGui {
     private static String formatType(Augment.AugmentType type) {
         return switch (type) {
             case STAT_BOOST -> "&#44FFFFStat Boost";
-            case AURA -> "&#FF44FFAura";
-            case ON_HIT -> "&#FF4444On Hit";
-            case ON_KILL -> "&#FFAA00On Kill";
-            case ON_DEATH -> "&#CCCCCC#CCCCCCOn Death";
-            case PASSIVE -> "&#44FF44Passive";
+            case AURA       -> "&#FF44FFAura";
+            case ON_HIT     -> "&#FF6B6BOn Hit";
+            case ON_KILL    -> "&#FFAA00On Kill";
+            case ON_DEATH   -> "&#CCCCCCOn Death";
+            case PASSIVE    -> "&#6BFF6BPassive";
         };
     }
 
